@@ -20,7 +20,11 @@ import java.util.regex.Pattern;
 public class DataFactory {
     public static Map<Integer, List<ScheduleChange>> classesChanges;
     private static Integer[] classesID = {3, 5, 6, 7, 8, 9, 10, 11, 38, 39, 40, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 41, 36}; //3 = y1; 13 = ya1; 22 = yb1;
-        
+
+    /**
+     * Load the school changes data and saves them
+     * @throws IOException
+     */
     public static void loadData() throws IOException {
         final String pageURL = "http://deshalit.iscool.co.il/default.aspx";
         Pattern ptrn = Pattern.compile("<td class=\"MsgCell.+\\s+.+"); //filter through all page
