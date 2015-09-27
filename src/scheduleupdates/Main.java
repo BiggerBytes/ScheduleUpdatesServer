@@ -17,7 +17,6 @@ import java.util.logging.Level;
  * @author Avishay
  */
 public class Main {
-    private static List<ScheduleChange> changeArr = null;
     private static final Long REFRESH_DELAY = (3l*60l*60l*1000l); //    =   3 hours in milliseconds
 
     public static void main(String[] args) throws IOException {
@@ -41,11 +40,10 @@ public class Main {
         }
     }
 
-    private static Boolean toContinueRefresh = true;
     public static void initHourlyDataRefresh(){
         Runnable runnable = () -> {
             try {
-                while (toContinueRefresh) {
+                while (true) { // Thread running in the background all the time
                     DataFactory.loadData();
                     synchronized (Thread.currentThread()){
                         Thread.currentThread().sleep(REFRESH_DELAY);
