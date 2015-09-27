@@ -8,6 +8,7 @@ package scheduleupdates;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -17,17 +18,18 @@ import java.util.logging.Level;
  */
 public class Main {
     private static List<ScheduleChange> changeArr = null;
-    
+    private static final Long REFRESH_DELAY = (3l*60l*60l*1000l); //    =   3 hours in milliseconds
+
     public static void main(String[] args) throws IOException {
-        java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF); 
+        java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
         final int PORT = 25560;
         ServerSocket serverSocket = null;
         
         try {
             serverSocket = new ServerSocket(PORT);
-            DataFactory.loadData();//Loading data --- TODO load again everyhour
+            initHourlyDataRefresh();
         } catch (Exception e) {
-            System.err.println("Couldn't litsen on port " + PORT);
+            System.err.println("Couldn't listen on port " + PORT);
             System.exit(-1);
         }
         
@@ -37,5 +39,23 @@ public class Main {
             Thread t = new ServerThread(clientSocket);
             t.start();
         }
+    }
+
+    private static Boolean toContinueRefresh = true;
+    public static void initHourlyDataRefresh(){
+        Runnable runnable = () -> {
+            try {
+                while (toContinueRefresh) {
+                    DataFactory.loadData();
+                    synchronized (Thread.currentThread()){
+                        Thread.currentThread().sleep(REFRESH_DELAY);
+                    }
+                }
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
+        };
+        Thread thread = new Thread(runnable, "DataRefreshThread");
+        thread.start();
     }
 }
