@@ -17,12 +17,8 @@ import java.util.logging.Level;
  * @author Avishay
  */
 public class Main {
-<<<<<<< HEAD
     private static List<ScheduleChange> changeArr = null;
-    private static final Long REFRESH_DELAY = (6l*60l*60l*1000l); //    =   6 hours in milliseconds
-=======
     private static final Long REFRESH_DELAY = (3l*60l*60l*1000l); //    =   3 hours in milliseconds
->>>>>>> origin/master
 
     public static void main(String[] args) throws IOException {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
@@ -31,11 +27,7 @@ public class Main {
         
         try {
             serverSocket = new ServerSocket(PORT);
-<<<<<<< HEAD
             initHourlyDataRefresh();//Loading data --- TODO load again everyhour
-=======
-            initHourlyDataRefresh();
->>>>>>> origin/master
         } catch (Exception e) {
             System.err.println("Couldn't listen on port " + PORT);
             System.exit(-1);
@@ -49,18 +41,10 @@ public class Main {
         }
     }
 
-<<<<<<< HEAD
-    private static Boolean toContinueRefresh = true;
-    public static void initHourlyDataRefresh(){
-        Runnable runnable = () -> {
-            try {
-                while (toContinueRefresh) {
-=======
     public static void initHourlyDataRefresh(){
         Runnable runnable = () -> {
             try {
                 while (true) { // Thread running in the background all the time
->>>>>>> origin/master
                     DataFactory.loadData();
                     synchronized (Thread.currentThread()){
                         Thread.currentThread().sleep(REFRESH_DELAY);
@@ -73,8 +57,4 @@ public class Main {
         Thread thread = new Thread(runnable, "DataRefreshThread");
         thread.start();
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/master
