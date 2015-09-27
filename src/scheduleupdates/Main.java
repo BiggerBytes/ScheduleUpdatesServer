@@ -29,7 +29,7 @@ public class Main {
             serverSocket = new ServerSocket(PORT);
             initHourlyDataRefresh();//Loading data --- TODO load again everyhour
         } catch (Exception e) {
-            System.err.println("Couldn't litsen on port " + PORT);
+            System.err.println("Couldn't listen on port " + PORT);
             System.exit(-1);
         }
         
