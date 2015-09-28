@@ -21,12 +21,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
-        final int PORT = 25560;
+        final int PORT = 25565;
         ServerSocket serverSocket = null;
         
         try {
             serverSocket = new ServerSocket(PORT);
-            initHourlyDataRefresh();//Loading data --- TODO load again everyhour
+            initHourlyDataRefresh();
         } catch (Exception e) {
             System.err.println("Couldn't listen on port " + PORT);
             System.exit(-1);
