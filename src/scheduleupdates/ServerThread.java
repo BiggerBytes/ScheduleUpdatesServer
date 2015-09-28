@@ -34,7 +34,7 @@ public class ServerThread extends Thread {
             is = new ObjectOutputStream(new BufferedOutputStream(client.getOutputStream()));           
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
-            classID = in.read();
+            classID = Integer.parseInt(in.readLine());
             
             is.writeObject(DataFactory.classesChanges.get(classID));
             System.out.println("Object sent");
