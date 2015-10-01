@@ -60,13 +60,14 @@ public class DataFactory {
 
             matches.stream().forEach(s -> addToMap(classID, s.split(", ")));
         }
-        webClient.close();
+        webClient.close();       
+        
     }
     
     public static void addToMap(Integer id, String[] info) {
         if (classesChanges.get(id) == null) {
             classesChanges.put(id, new ArrayList<ScheduleChange>());
         }
-        classesChanges.get(id).add(new ScheduleChange(Integer.parseInt(info[0].substring(0, 2)), info[1].charAt(info[1].length()-1) - '0' ,info[2]));
+        classesChanges.get(id).add(new ScheduleChange(Integer.parseInt(info[0].substring(0, 2)), info[1].charAt(info[1].length()-1) - '0' ,info[2], ScheduleChange.ChangeType.CANCELLED));
     }
 }
