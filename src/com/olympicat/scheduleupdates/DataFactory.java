@@ -5,6 +5,7 @@
  */
 package com.olympicat.scheduleupdates;
 
+import com.olympicat.scheduleupdates.serverdatarecievers.ScheduleChange;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.ScriptResult;
 import com.gargoylesoftware.htmlunit.WebClient;
@@ -62,7 +63,7 @@ public class DataFactory {
             matches.stream().forEach(s -> addToMap(classID, s.split(", ")));
         }
         webClient.close();  
-        ScheduleChange[] arr = {new ScheduleChange(Integer.parseInt("25.03.15".substring(0, 2)), "שעה 5".charAt("שעה 5".length()-1) - '0' ,"אלי כהן", ScheduleChange.ChangeType.CANCELLED)};
+        ScheduleChange[] arr = {new ScheduleChange(Integer.parseInt("25.03.15".substring(0, 2)), "שעה 5".charAt("שעה 5".length()-1) - '0' ,"אלי כהן", ScheduleChange.ChangeType.CANCELLED)}; // TODO remove dummy and actually read from website
         classesChanges.put(24, arr);
         System.out.println("Finished reading data.");
     }

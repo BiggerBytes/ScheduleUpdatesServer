@@ -5,6 +5,7 @@
  */
 package com.olympicat.scheduleupdates;
 
+import com.olympicat.scheduleupdates.serverdatarecievers.ScheduleChange;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
