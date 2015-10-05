@@ -1,4 +1,4 @@
-package scheduleupdates;
+package com.olympicat.scheduleupdates;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -47,7 +47,6 @@ public class ScheduleChange implements Serializable {
     public void setTeacherName(String teacherName) {
         this.teacherName = teacherName;
     }
-
 
     public ChangeType getType() {
         return type;

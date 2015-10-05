@@ -3,13 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package scheduleupdates;
+package com.olympicat.scheduleupdates;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -26,25 +23,29 @@ public class ServerThread extends Thread {
     
     public void run() {
         ObjectOutputStream is;
-        BufferedReader in;
+        ObjectInputStream in;
         Integer classID;
         try {
             System.out.println("Client is in!");
             
-            is = new ObjectOutputStream(new BufferedOutputStream(client.getOutputStream()));           
-            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-
-            classID = Integer.parseInt(in.readLine());
-            
-            is.writeObject(DataFactory.classesChanges.get(classID));
-            System.out.println("Object sent");
+            is = new ObjectOutputStream(client.getOutputStream()); 
+            in = new ObjectInputStream(client.getInputStream());          
+            classID = (Integer) in.readObject();
+            if (DataFactory.classesChanges.get(classID) != null) {
+                ScheduleChange[] su = DataFactory.classesChanges.get(classID);
+                is.writeObject(su);
+                System.out.println("Object sent for ID " + classID);
+                System.out.println(su[0].getHour());
+            }
+            else
+                System.out.println("Object wasn't sent");
 
             is.close();
             in.close();
             client.close();
             
             } catch (Exception e) {
-                
+                e.printStackTrace();
             }
         }
     }
