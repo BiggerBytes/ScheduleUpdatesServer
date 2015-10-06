@@ -12,6 +12,7 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -62,8 +63,10 @@ public class DataFactory {
 
             matches.stream().forEach(s -> addToMap(classID, s.split(", ")));
         }
-        webClient.close();  
-        ScheduleChange[] arr = {new ScheduleChange(Integer.parseInt("25.03.15".substring(0, 2)), "שעה 5".charAt("שעה 5".length()-1) - '0' ,"אלי כהן", ScheduleChange.ChangeType.CANCELLED)}; // TODO remove dummy and actually read from website
+        webClient.close();
+        Calendar c = Calendar.getInstance();
+        c.set(Integer.parseInt("25.03.15".substring(6, 8)), Integer.parseInt("25.03.15".substring(3, 5)), Integer.parseInt("25.03.15".substring(0, 2)));
+        ScheduleChange[] arr = {new ScheduleChange(c, "שעה 5".charAt("שעה 5".length()-1) - '0' ,"אלי כהן", ScheduleChange.ChangeType.CANCELLED)}; // TODO remove dummy and actually read from website
         classesChanges.put(24, arr);
         System.out.println("Finished reading data.");
     }

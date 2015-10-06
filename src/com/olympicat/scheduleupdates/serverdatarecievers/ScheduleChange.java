@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  *
@@ -12,24 +13,24 @@ import java.io.Serializable;
 public class ScheduleChange implements Serializable {
 
     private Integer hour;
-    private Integer dayInMonth;
+    private Calendar c;
     private String teacherName;
 
     private ChangeType type;
 
-    public ScheduleChange(Integer dayInMonth, Integer hour, String teacherName, ChangeType type) {
-        this.dayInMonth = dayInMonth;
+    public ScheduleChange(Calendar c, Integer hour, String teacherName, ChangeType type) {
+        this.c = c;
         this.hour = hour;
         this.teacherName = teacherName;
         this.type = type;
     }
 
-    public Integer getDayInMonth() {
-        return dayInMonth;
+    public Calendar getC() {
+        return c;
     }
 
-    public void setDayInMonth(Integer dayInMonth) {
-        this.dayInMonth = dayInMonth;
+    public void setC(Calendar c) {
+        this.c = c;
     }
 
     public Integer getHour() {
