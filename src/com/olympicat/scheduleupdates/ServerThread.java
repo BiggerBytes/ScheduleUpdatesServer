@@ -9,6 +9,7 @@ import com.olympicat.scheduleupdates.serverdatarecievers.ScheduleChange;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Calendar;
 
 /**
  *
@@ -36,7 +37,6 @@ public class ServerThread extends Thread {
                 ScheduleChange[] su = DataFactory.classesChanges.get(classID);
                 is.writeObject(su);
                 System.out.println("Object sent for ID " + classID);
-                System.out.println(su[0].getHour());
             }
             else
                 System.out.println("Object wasn't sent");

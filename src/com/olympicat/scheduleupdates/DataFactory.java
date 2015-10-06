@@ -12,6 +12,7 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -65,16 +66,22 @@ public class DataFactory {
         }
         webClient.close();
         Calendar c = Calendar.getInstance();
-        c.set(Integer.parseInt("25.03.15".substring(6, 8)), Integer.parseInt("25.03.15".substring(3, 5)), Integer.parseInt("25.03.15".substring(0, 2)));
-        ScheduleChange[] arr = {new ScheduleChange(c, "שעה 5".charAt("שעה 5".length()-1) - '0' ,"אלי כהן", ScheduleChange.ChangeType.CANCELLED)}; // TODO remove dummy and actually read from website
+        ScheduleChange[] arr = {new ScheduleChange("07.10.15", "שעה 5".charAt("שעה 5".length()-1) - '0' ,"ניב וינשטוק", ScheduleChange.ChangeType.CANCELLED),
+                                new ScheduleChange("08.10.15", "שעה 3".charAt("שעה 5".length()-1) - '0' ,"יוסי אבוטבול", ScheduleChange.ChangeType.CANCELLED)
+                                                                                                                                                            }; 
+               
         classesChanges.put(24, arr);
         System.out.println("Finished reading data.");
     }
     
     public static void addToMap(Integer id, String[] info) {
-//        if (classesChanges.get(id) == null) {
-//            classesChanges.put(id, new ArrayList<ScheduleChange>());
-//        }
-//        classesChanges.get(id).add(new ScheduleChange(Integer.parseInt(info[0].substring(0, 2)), info[1].charAt(info[1].length()-1) - '0' ,info[2], ScheduleChange.ChangeType.CANCELLED));    
+        System.out.println("Reading info for classID " + id);
+        ScheduleChange[] changes = {};
+        if (classesChanges.get(id) != null) {
+            changes = classesChanges.get(id);
+        }
+        List<ScheduleChange> changes_ = Arrays.asList(changes);
+        changes_.add(new ScheduleChange(info[0], info[1].charAt(info[1].length()-1) - '0' ,info[3], ScheduleChange.ChangeType.CANCELLED));
+        classesChanges.put(id, (ScheduleChange[]) changes_.toArray());
     }
 }
