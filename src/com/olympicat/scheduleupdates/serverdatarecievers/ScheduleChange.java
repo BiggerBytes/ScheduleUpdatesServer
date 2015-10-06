@@ -13,24 +13,24 @@ import java.util.Calendar;
 public class ScheduleChange implements Serializable {
 
     private Integer hour;
-    private Calendar c;
+    private Calendar date;
     private String teacherName;
 
     private ChangeType type;
 
-    public ScheduleChange(Calendar c, Integer hour, String teacherName, ChangeType type) {
-        this.c = c;
+    public ScheduleChange(Calendar date, Integer hour, String teacherName, ChangeType type) {
+        this.date = date;
         this.hour = hour;
         this.teacherName = teacherName;
         this.type = type;
     }
 
-    public Calendar getC() {
-        return c;
+    public Calendar getDate() {
+        return date;
     }
 
-    public void setC(Calendar c) {
-        this.c = c;
+    public void setDate(Calendar date) {
+        this.date = date;
     }
 
     public Integer getHour() {
