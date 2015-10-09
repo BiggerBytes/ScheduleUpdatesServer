@@ -65,23 +65,29 @@ public class DataFactory {
             matches.stream().forEach(s -> addToMap(classID, s.split(", ")));
         }
         webClient.close();
-        Calendar c = Calendar.getInstance();
-        ScheduleChange[] arr = {new ScheduleChange("07.10.15", "שעה 5".charAt("שעה 5".length()-1) - '0' ,"ניב וינשטוק", ScheduleChange.ChangeType.CANCELLED),
-                                new ScheduleChange("08.10.15", "שעה 3".charAt("שעה 5".length()-1) - '0' ,"יוסי אבוטבול", ScheduleChange.ChangeType.CANCELLED)
-                                                                                                                                                            }; 
+        
+//        ScheduleChange[] arr = {new ScheduleChange("07.10.15", "שעה 5".charAt("שעה 5".length()-1) - '0' ,"ניב וינשטוק", ScheduleChange.ChangeType.CANCELLED),
+//                                new ScheduleChange("08.10.15", "שעה 3".charAt("שעה 5".length()-1) - '0' ,"יוסי אבוטבול", ScheduleChange.ChangeType.CANCELLED)
+//                                                                                                                                                            }; 
                
-        classesChanges.put(24, arr);
         System.out.println("Finished reading data.");
     }
     
     public static void addToMap(Integer id, String[] info) {
         System.out.println("Reading info for classID " + id);
-        ScheduleChange[] changes = {};
-        if (classesChanges.get(id) != null) {
+        ScheduleChange[] changes;
+        if (classesChanges.get(id) == null)
+            changes = new ScheduleChange[0];
+        else  
             changes = classesChanges.get(id);
+       
+        ScheduleChange[] changes_ = new ScheduleChange[changes.length + 1];
+        int index = 0;
+        for (ScheduleChange change : changes) {
+            changes_[index] = change;
+            index++;
         }
-        List<ScheduleChange> changes_ = Arrays.asList(changes);
-        changes_.add(new ScheduleChange(info[0], info[1].charAt(info[1].length()-1) - '0' ,info[3], ScheduleChange.ChangeType.CANCELLED));
-        classesChanges.put(id, (ScheduleChange[]) changes_.toArray());
+        changes_[index] = (new ScheduleChange(info[0], info[1].substring(info[1].length()-1) ,info[2], info[3].equals("ביטול שעור") ? ScheduleChange.ChangeType.CANCELLED : ScheduleChange.ChangeType.SUB));
+        classesChanges.put(id, changes_);
     }
 }

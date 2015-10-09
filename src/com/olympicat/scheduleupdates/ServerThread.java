@@ -36,10 +36,13 @@ public class ServerThread extends Thread {
             if (DataFactory.classesChanges.get(classID) != null) {
                 ScheduleChange[] su = DataFactory.classesChanges.get(classID);
                 is.writeObject(su);
+                System.out.println("Send array with class that has " + su[0].getTeacherName());
                 System.out.println("Object sent for ID " + classID);
             }
-            else
-                System.out.println("Object wasn't sent");
+            else {
+                is.writeObject(new ScheduleChange[0]);
+                System.out.println("Sent empty object.");
+            }
 
             is.close();
             in.close();
