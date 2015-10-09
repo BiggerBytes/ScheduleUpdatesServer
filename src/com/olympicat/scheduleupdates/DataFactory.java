@@ -22,7 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DataFactory {
-    public static Map<Integer, ScheduleChange[]> classesChanges = new HashMap<Integer, ScheduleChange[]>();;
+    public static Map<Integer, ScheduleChange[]> classesChanges;
     private static Integer[] classesID = {3, 5, 6, 7, 8, 9, 10, 11, 38, 39, 40, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 41, 36}; //3 = y1; 13 = ya1; 22 = yb1;
 
     /**
@@ -62,6 +62,7 @@ public class DataFactory {
                 itr.set(matcher.group());
             }
 
+            classesChanges = new HashMap<Integer, ScheduleChange[]>();
             matches.stream().forEach(s -> addToMap(classID, s.split(", ")));
         }
         webClient.close();
