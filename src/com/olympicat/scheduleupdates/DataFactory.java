@@ -39,6 +39,7 @@ public class DataFactory {
         WebClient webClient = new WebClient(BrowserVersion.INTERNET_EXPLORER_11);
         HtmlPage page = webClient.getPage(pageURL);
         
+        classesChanges = new HashMap<Integer, ScheduleChange[]>(); // Reset all the data everytime the func is called to avoid duplicate data
         for (Integer classID : classesID) {
             ScriptResult result = page.executeJavaScript("document.getElementById('dnn_ctr11396_TimeTableView_ClassesList').value=" + classID +";");
             page = (HtmlPage) result.getNewPage();
@@ -62,15 +63,13 @@ public class DataFactory {
                 itr.set(matcher.group());
             }
 
-            classesChanges = new HashMap<Integer, ScheduleChange[]>();
             matches.stream().forEach(s -> addToMap(classID, s.split(", ")));
         }
         webClient.close();
         
 //        ScheduleChange[] arr = {new ScheduleChange("07.10.15", "שעה 5".charAt("שעה 5".length()-1) - '0' ,"ניב וינשטוק", ScheduleChange.ChangeType.CANCELLED),
 //                                new ScheduleChange("08.10.15", "שעה 3".charAt("שעה 5".length()-1) - '0' ,"יוסי אבוטבול", ScheduleChange.ChangeType.CANCELLED)
-//                                                                                                                                                            }; 
-               
+//                                                                                                                                                            };      
         System.out.println("Finished reading data.");
     }
     
