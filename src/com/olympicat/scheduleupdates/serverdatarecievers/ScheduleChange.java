@@ -13,6 +13,8 @@ import java.util.Calendar;
  */
 public class ScheduleChange implements Serializable {
 
+    public static final long serialVersionUID = 1l;
+
     private String hour;
     private String date;
     private String teacherName;
