@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.lang.Override;
 import java.util.Calendar;
 
 /**
@@ -11,6 +12,8 @@ import java.util.Calendar;
  * @author Avishay
  */
 public class ScheduleChange implements Serializable {
+
+    public static final long serialVersionUID = 1l;
 
     private String hour;
     private String date;
@@ -74,4 +77,27 @@ public class ScheduleChange implements Serializable {
         CANCELLED, SUB
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ScheduleChange)) return false;
+
+        ScheduleChange that = (ScheduleChange) o;
+
+        if (!hour.equals(that.hour)) return false;
+        if (!date.equals(that.date)) return false;
+        if (!teacherName.equals(that.teacherName)) return false;
+        if (type != that.type) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = hour.hashCode();
+        result = 31 * result + date.hashCode();
+        result = 31 * result + teacherName.hashCode();
+        result = 31 * result + type.hashCode();
+        return result;
+    }
 }
