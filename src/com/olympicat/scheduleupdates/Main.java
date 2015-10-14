@@ -18,7 +18,7 @@ import java.util.logging.Level;
  */
 public class Main {
     private static List<ScheduleChange> changeArr = null;
-    private static final Long REFRESH_DELAY = (3l*60l*60l*1000l); //    =   3 hours in milliseconds
+    private static final Long REFRESH_DELAY = (1l*60l*60l*1000l); //    =   1h in milliseconds
 
     public static void main(String[] args) throws IOException {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);

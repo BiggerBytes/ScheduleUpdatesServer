@@ -67,7 +67,8 @@ public class DataFactory {
         }
         webClient.close();
         
-//        ScheduleChange[] arr = {new ScheduleChange("07.10.15", "שעה 5".charAt("שעה 5".length()-1) - '0' ,"ניב וינשטוק", ScheduleChange.ChangeType.CANCELLED),
+       ScheduleChange[] arr = {new ScheduleChange("07.10.15", "שעה 5" ,"ניב וינשטוק", ScheduleChange.ChangeType.CANCELLED)};
+//     addToMap(23, new String[] {"07.10.15", "שעה 5", "שישליק", "ביטול שעור"});
 //                                new ScheduleChange("08.10.15", "שעה 3".charAt("שעה 5".length()-1) - '0' ,"יוסי אבוטבול", ScheduleChange.ChangeType.CANCELLED)
 //                                                                                                                                                            };      
         System.out.println("Finished reading data.");
