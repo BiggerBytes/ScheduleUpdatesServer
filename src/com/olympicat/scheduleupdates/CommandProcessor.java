@@ -33,13 +33,16 @@ public class CommandProcessor {
                     
                     case CommandConstants.ADD_CANCEL_DUMMY:
                         try {
-                        ScheduleChange dummy = new ScheduleChange(new String(Arrays.copyOfRange(command, 9, 33), "UTF-8"),
-                                                                  new String(Arrays.copyOfRange(command, 3, 9), "UTF-8"),
-                                                                  new String(Arrays.copyOfRange(command, 33, command.length), "UTF-8"),
+                        ScheduleChange dummy = new ScheduleChange(new String(Arrays.copyOfRange(command, 5, 15)),
+                                                                  new String(Arrays.copyOfRange(command, 3, 5)),
+                                                                  new String(Arrays.copyOfRange(command, 15, command.length), "UTF-8"),
                                                                   ScheduleChange.ChangeType.CANCELLED); 
+                        if (dummy.getHour().startsWith("0"))
+                            dummy.setHour(dummy.getHour().substring(1));
                         addDummy(dummy, (int) command[2]);
                         } catch (Exception e) {
                             alertFailure();
+                            e.printStackTrace();
                         }
                         break;
                         
@@ -75,7 +78,7 @@ public class CommandProcessor {
         }
     }
     
-    private static void addDummy(ScheduleChange change, Integer classID) {
+    private static void addDummy(ScheduleChange change, Integer classID) {     
         ScheduleChange[] changes;
         if (dummyChanges.get(classID) == null)
             changes = new ScheduleChange[0];

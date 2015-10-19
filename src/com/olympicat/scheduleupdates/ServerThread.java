@@ -11,8 +11,10 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -42,10 +44,26 @@ public class ServerThread extends Thread {
             classID = (Integer) in.readObject();
             System.out.println("Recieved request for id " + classID);
             if (DataFactory.classesChanges.get(classID) != null) {
-                List<ScheduleChange> su = Arrays.asList(DataFactory.classesChanges.get(classID));
-                if (Main.dummyChanges.get(classID) != null) // If there are additional changes in the dummies map at the classID
-                    su.addAll(Arrays.asList(Main.dummyChanges.get(classID)));
-                is.writeObject(su.toArray());
+                ScheduleChange[] su = DataFactory.classesChanges.get(classID);
+                ScheduleChange[] newSu = null;
+                if (Main.dummyChanges.get(classID) != null) { // If there are additional changes in the dummies map at the classID
+                    newSu = new ScheduleChange[su.length + Main.dummyChanges.get(classID).length]; // this shit is necessary because I need to change the size of the array to add the dummies
+                    Integer index = 0;
+                    for (ScheduleChange regChange : DataFactory.classesChanges.get(classID)) {
+                        newSu[index] = regChange;
+                        index++;
+                    }
+                    
+                    for (ScheduleChange dummy : Main.dummyChanges.get(classID)) {
+                        newSu[index] = dummy;
+                        index++;
+                        
+                    }
+                } else
+                    newSu = su; // in case there are no dummies
+                System.out.println("Sent with size " + newSu.length);
+                System.out.println(newSu[0].getTeacherName());
+                is.writeObject(newSu);
                 System.out.println("Object sent for ID " + classID);
             }
             else {
