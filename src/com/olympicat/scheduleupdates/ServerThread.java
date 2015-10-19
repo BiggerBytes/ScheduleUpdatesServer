@@ -11,7 +11,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -40,9 +42,10 @@ public class ServerThread extends Thread {
             classID = (Integer) in.readObject();
             System.out.println("Recieved request for id " + classID);
             if (DataFactory.classesChanges.get(classID) != null) {
-                ScheduleChange[] su = DataFactory.classesChanges.get(classID);
-                is.writeObject(su);
-                System.out.println("Send array with class that has " + su[0].getTeacherName());
+                List<ScheduleChange> su = Arrays.asList(DataFactory.classesChanges.get(classID));
+                if (Main.dummyChanges.get(classID) != null)
+                    su.addAll(Arrays.asList(Main.dummyChanges.get(classID)));
+                is.writeObject(su.toArray());
                 System.out.println("Object sent for ID " + classID);
             }
             else {
