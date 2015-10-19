@@ -22,7 +22,7 @@ public class Main {
     private static Thread infoReadThread = null;
 
     public static void main(String[] args) throws IOException {
-        java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
+        java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF); // In order to remove all the log warnings, THANK GOD IT IS THAT SIMPLE
         final int PORT = 25565;
         ServerSocket serverSocket = null;
         
