@@ -19,6 +19,7 @@ import java.util.logging.Level;
 public class Main {
     private static List<ScheduleChange> changeArr = null;
     private static final Long REFRESH_DELAY = (30l*60l*1000l); //    =   30m in milliseconds
+    private static Thread infoReadThread = null;
 
     public static void main(String[] args) throws IOException {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
@@ -27,7 +28,8 @@ public class Main {
         
         try {
             serverSocket = new ServerSocket(PORT);
-            initHourlyDataRefresh();
+            initDataRefreshThread();
+            infoReadThread.start();
         } catch (Exception e) {
             System.err.println("Couldn't listen on port " + PORT);
             System.exit(-1);
@@ -41,7 +43,7 @@ public class Main {
         }
     }
 
-    public static void initHourlyDataRefresh(){
+    public static void initDataRefreshThread(){
         Runnable runnable = () -> {
             try {
                 while (true) { // Thread running in the background all the time
@@ -54,7 +56,6 @@ public class Main {
                 e.printStackTrace();
             }
         };
-        Thread thread = new Thread(runnable, "DataRefreshThread");
-        thread.start();
+        infoReadThread = new Thread(runnable, "DataRefreshThread");
     }
 }
