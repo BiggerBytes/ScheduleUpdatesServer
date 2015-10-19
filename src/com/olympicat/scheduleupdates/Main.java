@@ -34,20 +34,31 @@ public class Main {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF); // In order to remove all the log warnings, THANK GOD IT IS THAT SIMPLE
         final int PORT = 25565;
         ServerSocket serverSocket = null;
-        /* Dummy Test */
-        List<Byte> command = new ArrayList<>();
-        command.add(CommandConstants.SCEHDULES_HEADER);
-        command.add(CommandConstants.ADD_CANCEL_DUMMY);
-        command.add((byte) 0x18);
-        command.addAll(Arrays.asList(ArrayUtils.toObject("05".getBytes())));
-        command.addAll(Arrays.asList(ArrayUtils.toObject("20.10.2015".getBytes())));
-        command.addAll(Arrays.asList(ArrayUtils.toObject("משמש גדול".getBytes())));
-        System.out.println("Size is " + command.size());
-        byte[] commandArr = new byte[command.size()];
-        for (int i = 0; i < commandArr.length; ++i)
-            commandArr[i] = command.get(i);
-        CommandProcessor.executeCommand(commandArr);
-        /* Dummy Test End */
+        
+//        /* Dummy Test */
+//        List<Byte> command = new ArrayList<>();
+//        command.add(CommandConstants.SCEHDULES_HEADER);
+//        command.add(CommandConstants.ADD_CANCEL_DUMMY);
+//        command.add((byte) 0x18);
+//        command.addAll(Arrays.asList(ArrayUtils.toObject("05".getBytes())));
+//        command.addAll(Arrays.asList(ArrayUtils.toObject("20.10.2015".getBytes())));
+//        command.addAll(Arrays.asList(ArrayUtils.toObject("משמש גדול".getBytes())));
+//        System.out.println("Size is " + command.size());
+//        byte[] commandArr = new byte[command.size()];
+//        for (int i = 0; i < commandArr.length; ++i)
+//            commandArr[i] = command.get(i);
+//        CommandProcessor.executeCommand(commandArr);
+//        /* Dummy Test End - TESTED, IT WORKS*/
+//        
+//        /* Dummy removal */
+//        byte[] remvCommand = new byte[3];
+//        remvCommand[0] = CommandConstants.SCEHDULES_HEADER;
+//        remvCommand[1] = CommandConstants.REMOVE_ALL_DUMMIES_FROM_ID;
+//        remvCommand[2] = (byte) 24;
+//        
+//        CommandProcessor.executeCommand(remvCommand);
+//        /* Dummy removal end - TESTED, WORKS*/
+        
         try {
             serverSocket = new ServerSocket(PORT);
             initDataRefreshThread();
