@@ -43,7 +43,7 @@ public class ServerThread extends Thread {
             System.out.println("Recieved request for id " + classID);
             if (DataFactory.classesChanges.get(classID) != null) {
                 List<ScheduleChange> su = Arrays.asList(DataFactory.classesChanges.get(classID));
-                if (Main.dummyChanges.get(classID) != null)
+                if (Main.dummyChanges.get(classID) != null) // If there are additional changes in the dummies map at the classID
                     su.addAll(Arrays.asList(Main.dummyChanges.get(classID)));
                 is.writeObject(su.toArray());
                 System.out.println("Object sent for ID " + classID);
