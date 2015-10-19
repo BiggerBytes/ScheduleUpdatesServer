@@ -32,11 +32,15 @@ public class CommandProcessor {
                         break;
                     
                     case CommandConstants.ADD_CANCEL_DUMMY:
-                        ScheduleChange dummy = new ScheduleChange(new String(Arrays.copyOfRange(command, 5, 13)),
-                                                                  new String(Arrays.copyOfRange(command, 3, 5)),
-                                                                  new String(Arrays.copyOfRange(command, 12, command.length)),
-                                                                  ScheduleChange.ChangeType.CANCELLED);
+                        try {
+                        ScheduleChange dummy = new ScheduleChange(new String(Arrays.copyOfRange(command, 9, 33), "UTF-8"),
+                                                                  new String(Arrays.copyOfRange(command, 3, 9), "UTF-8"),
+                                                                  new String(Arrays.copyOfRange(command, 33, command.length), "UTF-8"),
+                                                                  ScheduleChange.ChangeType.CANCELLED); 
                         addDummy(dummy, (int) command[2]);
+                        } catch (Exception e) {
+                            alertFailure();
+                        }
                         break;
                         
                     case CommandConstants.REMOVE_ALL_DUMMIES_FROM_ID:
