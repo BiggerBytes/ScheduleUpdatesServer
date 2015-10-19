@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
 /**
@@ -18,8 +19,10 @@ import java.util.logging.Level;
  */
 public class Main {
     private static List<ScheduleChange> changeArr = null;
-    private static final Long REFRESH_DELAY = (30l*60l*1000l); //    =   30m in milliseconds
+    private static Long refreshDelay = (30l * 60l * 1000l); //    =   30m in milliseconds
     private static Thread infoReadThread = null;
+    private static Boolean readDataFromThread = true;
+    public static Map<Integer, ScheduleChange[]> dummyChanges;
 
     public static void main(String[] args) throws IOException {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF); // In order to remove all the log warnings, THANK GOD IT IS THAT SIMPLE
@@ -47,9 +50,10 @@ public class Main {
         Runnable runnable = () -> {
             try {
                 while (true) { // Thread running in the background all the time
-                    DataFactory.loadData();
+                    if (readDataFromThread)
+                        DataFactory.loadData();
                     synchronized (Thread.currentThread()){
-                        Thread.currentThread().sleep(REFRESH_DELAY);
+                        Thread.currentThread().sleep(refreshDelay);
                     }
                 }
             } catch (InterruptedException | IOException e) {
@@ -58,4 +62,13 @@ public class Main {
         };
         infoReadThread = new Thread(runnable, "DataRefreshThread");
     }
+    
+    public static void setRefreshDelay(Long milliseconds) {
+        refreshDelay = milliseconds;
+    }
+    
+    public static void setThreadState(Boolean state) {
+        readDataFromThread = state;
+    }
+    
 }
