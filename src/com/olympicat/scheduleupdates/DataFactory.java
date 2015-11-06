@@ -93,7 +93,7 @@ public class DataFactory {
         }
         changes_[index] = (new ScheduleChange(info[0], info[1].substring(info[1].length()-1) ,info[2], info[3].equals("ביטול שעור") ? ScheduleChange.ChangeType.CANCELLED : ScheduleChange.ChangeType.SUB));
         if (changes_[index].getType() == ScheduleChange.ChangeType.SUB)
-            changes_[index].setSubTeacher(new SubTeacher(info[4].substring(11), info[5].substring(5)));
+            changes_[index].setSubTeacher(info[4].substring(11));
         classesChanges.put(id, changes_);
     }
 }

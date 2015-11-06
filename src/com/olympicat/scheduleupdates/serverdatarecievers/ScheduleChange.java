@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.lang.Override;
-import java.util.Calendar;
 
 /**
  *
@@ -21,7 +19,7 @@ public class ScheduleChange implements Serializable {
 
     private ChangeType type;
 
-    private SubTeacher subTeacher = null;
+    private String subTeacher = null;
     
     public ScheduleChange(String date, String hour, String teacherName, ChangeType type) {
         this.date = date;
@@ -62,11 +60,11 @@ public class ScheduleChange implements Serializable {
         this.type = type;
     }
 
-    public SubTeacher getSubTeacher() {
+    public String getSubTeacher() {
         return subTeacher;
     }
 
-    public void setSubTeacher(SubTeacher subTeacher) {
+    public void setSubTeacher(String subTeacher) {
         this.subTeacher = subTeacher;
     }
 
