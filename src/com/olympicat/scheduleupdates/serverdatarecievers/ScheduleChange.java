@@ -21,6 +21,8 @@ public class ScheduleChange implements Serializable {
 
     private ChangeType type;
 
+    private SubTeacher subTeacher = null;
+    
     public ScheduleChange(String date, String hour, String teacherName, ChangeType type) {
         this.date = date;
         this.hour = hour;
@@ -58,6 +60,14 @@ public class ScheduleChange implements Serializable {
 
     public void setType(ChangeType type) {
         this.type = type;
+    }
+
+    public SubTeacher getSubTeacher() {
+        return subTeacher;
+    }
+
+    public void setSubTeacher(SubTeacher subTeacher) {
+        this.subTeacher = subTeacher;
     }
 
     public void writeObject(ObjectOutputStream out) throws IOException {
