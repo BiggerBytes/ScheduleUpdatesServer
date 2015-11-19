@@ -36,7 +36,7 @@ public class CommandProcessor {
                         ScheduleChange dummy = new ScheduleChange(new String(Arrays.copyOfRange(command, 5, 15)),
                                                                   new String(Arrays.copyOfRange(command, 3, 5)),
                                                                   new String(Arrays.copyOfRange(command, 15, command.length), "UTF-8")); 
-                        if (dummy.getHour().startsWith("0"))
+                        if (dummy.getHour().startsWith("0")) //meh
                             dummy.setHour(dummy.getHour().substring(1));
                         addDummy(dummy, (int) command[2]);
                         } catch (Exception e) {
