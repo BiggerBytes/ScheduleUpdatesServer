@@ -13,12 +13,12 @@ public class ScheduleChange implements Serializable {
 
     public static final long serialVersionUID = 1l;
 
-    private Integer hour;
+    private String hour;
     private String date;
     private String teacherName;
     private String subTeacher = null; //hooray for being lazy, location not included
 
-    public ScheduleChange(String date, Integer hour, String teacherName) {
+    public ScheduleChange(String date, String hour, String teacherName) {
         this.date = date;
         this.hour = hour;
         this.teacherName = teacherName;
@@ -32,11 +32,11 @@ public class ScheduleChange implements Serializable {
         this.date = date;
     }
 
-    public Integer getHour() {
+    public String getHour() {
         return hour;
     }
 
-    public void setHour(Integer hour) {
+    public void setHour(String hour) {
         this.hour = hour;
     }
 

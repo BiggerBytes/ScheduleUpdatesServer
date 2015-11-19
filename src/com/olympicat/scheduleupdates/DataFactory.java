@@ -7,6 +7,7 @@ package com.olympicat.scheduleupdates;
 
 import com.olympicat.scheduleupdates.serverdatarecievers.ScheduleChange;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.ProxyConfig;
 import com.gargoylesoftware.htmlunit.ScriptResult;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -21,28 +22,33 @@ import java.util.regex.Pattern;
 
 public class DataFactory {
     public static Map<Integer, ScheduleChange[]> classesChanges;
-    private static Integer[] classesID = {3, 5, 6, 7, 8, 9, 10, 11, 38, 39, 40, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 41, 36}; //3 = y1; 13 = ya1; 22 = yb1;
+    private static Integer[] classesID = {40, 41, 36, 3, 5, 6, 7, 8, 9, 10, 11, 38, 39, 40, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30}; //3 = y1; 13 = ya1; 22 = yb1;
 
     /**
      * Load the school changes data and saves them
      * @throws IOException
      */
     public static void loadData() throws IOException {
-        final String pageURL = "http://deshalit.iscool.co.il/default.aspx";
+        final String pageURL = "http://deshalit.iscool.co.il/";
         Pattern ptrn = Pattern.compile("<td class=\"MsgCell.+\\s+.+"); //filter through all page
         Pattern ptrn2 = Pattern.compile("[\\d.]+.+"); //just for the information line
         Matcher matcher = null;
         String xml = "";
         
-        WebClient webClient = new WebClient(BrowserVersion.INTERNET_EXPLORER_11);
+        WebClient webClient = new WebClient(BrowserVersion.INTERNET_EXPLORER_8);
         HtmlPage page = webClient.getPage(pageURL);
         
         classesChanges = new HashMap<Integer, ScheduleChange[]>(); // Reset all the data everytime the func is called to avoid duplicate data
         for (Integer classID : classesID) {
+            webClient.waitForBackgroundJavaScript(1000);
+            try {
             ScriptResult result = page.executeJavaScript("document.getElementById('dnn_ctr11396_TimeTableView_ClassesList').value=" + classID +";");
             page = (HtmlPage) result.getNewPage();
             result = page.executeJavaScript("__doPostBack('dnn$ctr11396$TimeTableView$btnChanges','');");
             page = (HtmlPage) result.getNewPage();
+            } catch (Exception e) {
+                
+            }
 
             xml = page.asXml();
 
@@ -64,13 +70,7 @@ public class DataFactory {
             matches.stream().forEach(s -> addToMap(classID, s.split(", ")));
         }
         webClient.close();
-        
-       ScheduleChange[] arr = {new ScheduleChange("07.10.15", "שעה 5" ,"ניב וינשטוק", ScheduleChange.ChangeType.CANCELLED)};
-//       addToMap(24, new String[] {"18.10.2015", "שעה 7", "ניב וינשטוק", "ביטול שעור"});
-//       addToMap(24, new String[] {"18.10.2015", "8", "אנגל המלך", "ביטול שעור"});
-//       addToMap(18, new String[] {"07.10.15", "שעה 5", "7841", "ביטול שעור"});
-//                                new ScheduleChange("08.10.15", "שעה 3".charAt("שעה 5".length()-1) - '0' ,"יוסי אבוטבול", ScheduleChange.ChangeType.CANCELLED)
-//                                                                                                                                                            };      
+           
         System.out.println("Finished reading data.");
     }
     
@@ -88,8 +88,8 @@ public class DataFactory {
             changes_[index] = change;
             index++;
         }
-        changes_[index] = (new ScheduleChange(info[0], info[1].substring(info[1].length()-1) ,info[2], info[3].equals("ביטול שעור") ? ScheduleChange.ChangeType.CANCELLED : ScheduleChange.ChangeType.SUB));
-        if (changes_[index].getType() == ScheduleChange.ChangeType.SUB)
+        changes_[index] = (new ScheduleChange(info[0], info[1].substring(info[1].length()-2) ,info[2]));
+        if (info[3].equals("ביטול שעור"))
             changes_[index].setSubTeacher(info[4].substring(11));
         classesChanges.put(id, changes_);
     }
