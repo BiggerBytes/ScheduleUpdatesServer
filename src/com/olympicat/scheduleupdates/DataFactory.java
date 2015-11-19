@@ -87,9 +87,9 @@ public class DataFactory {
             changes_[index] = change;
             index++;
         }
-        changes_[index] = (new ScheduleChange(info[0], info[1].substring(info[1].length()-2) ,info[2]));
+        changes_[index] = (new ScheduleChange(info[0], info[1].substring(info[1].length()-2).replaceAll(" ", "") ,info[2]));
         if (!info[3].equals("ביטול שעור") && !info[3].equals("הביתה")) // this actually exists
-            changes_[index].setSubTeacher(info[3].substring(11));
+            changes_[index].setSubTeacher(info[3].substring(12));
         classesChanges.put(id, changes_);
     }
 }
