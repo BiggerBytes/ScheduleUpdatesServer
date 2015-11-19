@@ -7,7 +7,6 @@ package com.olympicat.scheduleupdates;
 
 import com.olympicat.scheduleupdates.serverdatarecievers.ScheduleChange;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.gargoylesoftware.htmlunit.ProxyConfig;
 import com.gargoylesoftware.htmlunit.ScriptResult;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -71,11 +70,11 @@ public class DataFactory {
         }
         webClient.close();
            
-        System.out.println("Finished reading data.");
+        Main.logger.info("Finished reading data.");
     }
     
     public static void addToMap(Integer id, String[] info) {
-        System.out.println("Reading info for classID " + id);
+        Main.logger.info("Reading info for classID " + id);
         ScheduleChange[] changes;
         if (classesChanges.get(id) == null)
             changes = new ScheduleChange[0];
@@ -89,8 +88,8 @@ public class DataFactory {
             index++;
         }
         changes_[index] = (new ScheduleChange(info[0], info[1].substring(info[1].length()-2) ,info[2]));
-        if (info[3].equals("ביטול שעור"))
-            changes_[index].setSubTeacher(info[4].substring(11));
+        if (!info[3].equals("ביטול שעור") && !info[3].equals("הביתה")) // this actually exists
+            changes_[index].setSubTeacher(info[3].substring(11));
         classesChanges.put(id, changes_);
     }
 }

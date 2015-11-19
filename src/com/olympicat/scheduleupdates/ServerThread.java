@@ -9,13 +9,6 @@ import com.olympicat.scheduleupdates.serverdatarecievers.ScheduleChange;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  *
@@ -33,11 +26,8 @@ public class ServerThread extends Thread {
         ObjectOutputStream is;
         ObjectInputStream in;
         Integer classID;
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
-        System.out.print(dateFormat.format(date) + ": ");
         try {
-            System.out.println("Client is in!");
+            Main.logger.info("Client is in!");
             
             is = new ObjectOutputStream(client.getOutputStream()); 
             in = new ObjectInputStream(client.getInputStream());          
@@ -61,14 +51,13 @@ public class ServerThread extends Thread {
                     }
                 } else
                     newSu = su; // in case there are no dummies
-                System.out.println("Sent with size " + newSu.length);
-                System.out.println(newSu[0].getTeacherName());
+                Main.logger.info("Sent with size " + newSu.length + "\n" + newSu[0].getTeacherName());
                 is.writeObject(newSu);
-                System.out.println("Object sent for ID " + classID);
+                Main.logger.info("Object sent for ID " + classID + " to " + client.getInetAddress().getHostAddress());
             }
             else {
                 is.writeObject(new ScheduleChange[0]);
-                System.out.println("Sent empty object.");
+                Main.logger.info("Sent empty object.");
             }
 
             is.close();
