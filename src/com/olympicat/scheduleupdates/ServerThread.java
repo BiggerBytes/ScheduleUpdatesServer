@@ -27,7 +27,8 @@ public class ServerThread extends Thread {
         ObjectInputStream in;
         Integer classID;
         try {
-            Main.logger.info("Client is in!");
+            if (Main.LOG)
+                Main.logger.info("Client is in!");
             
             is = new ObjectOutputStream(client.getOutputStream()); 
             in = new ObjectInputStream(client.getInputStream());          
@@ -51,13 +52,16 @@ public class ServerThread extends Thread {
                     }
                 } else
                     newSu = su; // in case there are no dummies
-                Main.logger.info("Sent with size " + newSu.length + "\n" + newSu[0].getTeacherName());
+                if (Main.LOG)
+                    Main.logger.info("Sent with size " + newSu.length + "\n" + newSu[0].getTeacherName());
                 is.writeObject(newSu);
-                Main.logger.info("Object sent for ID " + classID + " to " + client.getInetAddress().getHostAddress());
+                if (Main.LOG)
+                    Main.logger.info("Object sent for ID " + classID + " to " + client.getInetAddress().getHostAddress());
             }
             else {
                 is.writeObject(new ScheduleChange[0]);
-                Main.logger.info("Sent empty object.");
+                if (Main.LOG)
+                    Main.logger.info("Sent empty object.");
             }
 
             is.close();

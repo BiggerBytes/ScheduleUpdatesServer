@@ -29,6 +29,7 @@ public class Main {
     public static Map<Integer, ScheduleChange[]> dummyChanges = new HashMap<Integer, ScheduleChange[]>();
     public static Logger logger = Logger.getLogger("ServerLogger"); // Hooray for logging!
     private static FileHandler fh;
+    public static final Boolean LOG = false;
 
     public static void main(String[] args) throws IOException {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF); // In order to remove all the log warnings, THANK GOD IT IS THAT SIMPLE
@@ -36,11 +37,12 @@ public class Main {
         ServerSocket serverSocket = null;
         
         // Logger initialization 
-        fh = new FileHandler("serv_log.log", true); //It will create a new file everytime we start the server because the previous log is locked, I am not really sure where to close the handler.
-        logger.addHandler(fh);
-        SimpleFormatter formatter = new SimpleFormatter();
-        fh.setFormatter(formatter);
-        
+        if (LOG) {
+            fh = new FileHandler("serv_log.log", true); //It will create a new file everytime we start the server because the previous log is locked, I am not really sure where to close the handler.
+            logger.addHandler(fh);
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+        }
 //        /* Dummy Test */
 //        List<Byte> command = new ArrayList<>();
 //        command.add(CommandConstants.SCEHDULES_HEADER);
@@ -70,12 +72,14 @@ public class Main {
             initDataRefreshThread();
             infoReadThread.start();
         } catch (Exception e) {
-            logger.info("Couldn't listen on port " + PORT);
+            if (LOG)
+                logger.info("Couldn't listen on port " + PORT);
             System.exit(-1);
         }
         
         while (true) {
-            logger.info("Waiting for a client."); //TODO wait for the server to finish loading data then start waiting for a client
+            if (LOG)
+                logger.info("Waiting for a client."); //TODO wait for the server to finish loading data then start waiting for a client
             Socket clientSocket = serverSocket.accept();
             Thread t = new ServerThread(clientSocket);
             t.start();

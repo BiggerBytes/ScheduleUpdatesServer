@@ -69,12 +69,13 @@ public class DataFactory {
             matches.stream().forEach(s -> addToMap(classID, s.split(", ")));
         }
         webClient.close();
-           
-        Main.logger.info("Finished reading data.");
+        if (Main.LOG)
+            Main.logger.info("Finished reading data.");
     }
     
     public static void addToMap(Integer id, String[] info) {
-        Main.logger.info("Reading info for classID " + id);
+        if (Main.LOG)
+            Main.logger.info("Reading info for classID " + id);
         ScheduleChange[] changes;
         if (classesChanges.get(id) == null)
             changes = new ScheduleChange[0];
