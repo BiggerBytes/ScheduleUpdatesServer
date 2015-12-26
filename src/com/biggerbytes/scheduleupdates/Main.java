@@ -84,6 +84,7 @@ public class Main {
         new CreateClientThread().start(); //Setup thread for creating threads for clients
         
         while (true) {
+            System.out.println("waiting");
             if (LOG)
                 logger.info("Waiting for a client."); //TODO wait for the server to finish loading data then start waiting for a client
             Socket clientSocket = serverSocket.accept();

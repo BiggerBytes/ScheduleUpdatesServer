@@ -69,6 +69,7 @@ public class DataFactory {
             matches.stream().forEach(s -> addToMap(classID, s.split(", ")));
         }
         webClient.close();
+        System.out.println("finished reading");
         if (Main.LOG)
             Main.logger.info("Finished reading data.");
     }
