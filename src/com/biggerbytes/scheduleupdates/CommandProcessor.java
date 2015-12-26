@@ -1,7 +1,7 @@
-package com.olympicat.scheduleupdates;
+package com.biggerbytes.scheduleupdates;
 
-import static com.olympicat.scheduleupdates.Main.dummyChanges;
-import com.olympicat.scheduleupdates.serverdatarecievers.ScheduleChange;
+import static com.biggerbytes.scheduleupdates.Main.dummyChanges;
+import com.biggerbytes.scheduleupdates.serverdatarecievers.ScheduleChange;
 import java.util.Arrays;
 
 /**

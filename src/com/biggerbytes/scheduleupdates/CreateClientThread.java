@@ -1,4 +1,4 @@
-package com.olympicat.scheduleupdates;
+package com.biggerbytes.scheduleupdates;
 
 /**
  *

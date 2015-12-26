@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.olympicat.scheduleupdates;
+package com.biggerbytes.scheduleupdates;
 
-import com.olympicat.scheduleupdates.serverdatarecievers.ScheduleChange;
+import com.biggerbytes.scheduleupdates.serverdatarecievers.ScheduleChange;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.ScriptResult;
 import com.gargoylesoftware.htmlunit.WebClient;
