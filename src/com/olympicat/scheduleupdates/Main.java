@@ -12,6 +12,8 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +32,8 @@ public class Main {
     public static Logger logger = Logger.getLogger("ServerLogger"); // Hooray for logging!
     private static FileHandler fh;
     public static final Boolean LOG = false;
+    public static Integer threadCount = 0;
+    public static Queue<Socket> clientsQ = new LinkedBlockingQueue<>();
 
     public static void main(String[] args) throws IOException {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF); // In order to remove all the log warnings, THANK GOD IT IS THAT SIMPLE
@@ -77,12 +81,17 @@ public class Main {
             System.exit(-1);
         }
         
+        new CreateClientThread().start(); //Setup thread for creating threads for clients
+        
         while (true) {
             if (LOG)
                 logger.info("Waiting for a client."); //TODO wait for the server to finish loading data then start waiting for a client
             Socket clientSocket = serverSocket.accept();
-            Thread t = new ServerThread(clientSocket);
-            t.start();
+            clientsQ.add(clientSocket);
+            
+            //Client accepting moved to CreateClientThread, here we just add them to the queue
+            //Thread t = new ServerThread(clientSocket);
+            //t.start();
         }
     }
 
