@@ -11,7 +11,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
- *
+ * This thread is the server thread, it waits, accepts and handles clients 
  * @author Avishay
  */
 public class ServerThread extends Thread {

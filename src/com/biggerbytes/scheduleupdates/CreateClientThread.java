@@ -1,7 +1,7 @@
 package com.biggerbytes.scheduleupdates;
 
 /**
- *
+ * In order to preserve a good state of the machine, this thread limits the acceptance of simultaneous clients up to 50 by using a queue that is declared at the Main class. <br><br>Implements the Pub/sub design pattern 
  * @author Avishay
  */
 

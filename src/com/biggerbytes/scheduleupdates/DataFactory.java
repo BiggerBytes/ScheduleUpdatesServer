@@ -20,11 +20,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DataFactory {
+    /**
+     * This Map accepts a classID for the key and returns an array of the changes relevant to the class
+     */
     public static Map<Integer, ScheduleChange[]> classesChanges;
     private static Integer[] classesID = {40, 41, 36, 3, 5, 6, 7, 8, 9, 10, 11, 38, 39, 40, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30}; //3 = y1; 13 = ya1; 22 = yb1;
 
     /**
-     * Load the school changes data and saves them
+     * Load the school changes data and saves them in local memory
      * @throws IOException
      */
     public static void loadData() throws IOException {
@@ -41,12 +44,12 @@ public class DataFactory {
         for (Integer classID : classesID) {
             webClient.waitForBackgroundJavaScript(1000);
             try {
-            ScriptResult result = page.executeJavaScript("document.getElementById('dnn_ctr11396_TimeTableView_ClassesList').value=" + classID +";");
-            page = (HtmlPage) result.getNewPage();
-            result = page.executeJavaScript("__doPostBack('dnn$ctr11396$TimeTableView$btnChanges','');");
-            page = (HtmlPage) result.getNewPage();
+                ScriptResult result = page.executeJavaScript("document.getElementById('dnn_ctr11396_TimeTableView_ClassesList').value=" + classID +";");
+                page = (HtmlPage) result.getNewPage();
+                result = page.executeJavaScript("__doPostBack('dnn$ctr11396$TimeTableView$btnChanges','');");
+                page = (HtmlPage) result.getNewPage();
             } catch (Exception e) {
-                
+               e.printStackTrace();
             }
 
             xml = page.asXml();
@@ -74,7 +77,7 @@ public class DataFactory {
             Main.logger.info("Finished reading data.");
     }
     
-    public static void addToMap(Integer id, String[] info) {
+    private static void addToMap(Integer id, String[] info) {
         if (Main.LOG)
             Main.logger.info("Reading info for classID " + id);
         ScheduleChange[] changes;

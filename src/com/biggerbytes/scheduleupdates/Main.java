@@ -28,13 +28,19 @@ public class Main {
     private static Long refreshDelay = (30l * 60l * 1000l); //    =   30m in milliseconds
     private static Thread infoReadThread = null;
     private static Boolean readDataFromThread = true;
+    private static FileHandler fh;
+    
     public static Map<Integer, ScheduleChange[]> dummyChanges = new HashMap<Integer, ScheduleChange[]>();
     public static Logger logger = Logger.getLogger("ServerLogger"); // Hooray for logging!
-    private static FileHandler fh;
     public static final Boolean LOG = false;
     public static Integer threadCount = 0;
     public static Queue<Socket> clientsQ = new LinkedBlockingQueue<>();
 
+    /**
+     * 
+     * @param args
+     * @throws IOException 
+     */
     public static void main(String[] args) throws IOException {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF); // In order to remove all the log warnings, THANK GOD IT IS THAT SIMPLE
         final int PORT = 25565;
@@ -89,13 +95,12 @@ public class Main {
                 logger.info("Waiting for a client."); //TODO wait for the server to finish loading data then start waiting for a client
             Socket clientSocket = serverSocket.accept();
             clientsQ.add(clientSocket);
-            
-            //Client accepting moved to CreateClientThread, here we just add them to the queue
-            //Thread t = new ServerThread(clientSocket);
-            //t.start();
         }
     }
 
+    /**
+     * Redownloads the data with the constant interval called 'refreshDelay' as the time factor
+     */
     public static void initDataRefreshThread(){
         Runnable runnable = () -> {
             try {
