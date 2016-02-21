@@ -9,7 +9,6 @@ public interface CommandConstants {
     // HEADERS 
     final byte SERVER_HEADER = 0x5F;
     final byte SCEHDULES_HEADER = 0x6F;
-    final byte TESTS_HEADER = 0x7F;
     
     // SERVER FLAGS    
     final byte SET_SERVER_STATE = 0x50;
