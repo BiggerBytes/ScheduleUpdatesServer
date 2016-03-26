@@ -45,14 +45,25 @@ public class CommandProcessor {
                         }
                         break;
                         
+                    case CommandConstants.ADD_SUB_DUMMY:
+                        try {
+                            ScheduleChange dummy = new ScheduleChange(new String(Arrays.copyOfRange(command, 5, 15)),
+                                                    new String(Arrays.copyOfRange(command, 3, 5)),
+                                                    "");
+                            dummy.setSubTeacher(new String(Arrays.copyOfRange(command,15, command.length), "UTF-8"));
+                            if (dummy.getHour().startsWith("0")) //meh2
+                                dummy.setHour(dummy.getHour().substring(1));
+                            addDummy(dummy, (int) command[2]);
+                        } catch (Exception e) {
+                            alertFailure();
+                            e.printStackTrace();
+                        }
+                        break;
+                        
                     case CommandConstants.REMOVE_ALL_DUMMIES_FROM_ID:
                         removeDummiesFromID((int) command[2]);
                         break;
                 }
-                break;
-            
-            case CommandConstants.TESTS_HEADER:
-                // TODO
                 break;
         }
     }

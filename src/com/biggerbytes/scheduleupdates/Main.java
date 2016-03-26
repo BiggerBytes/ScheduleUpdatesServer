@@ -9,6 +9,8 @@ import com.biggerbytes.scheduleupdates.serverdatarecievers.ScheduleChange;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
  *
@@ -56,19 +59,19 @@ public class Main {
 //        /* Dummy Test */
 //        List<Byte> command = new ArrayList<>();
 //        command.add(CommandConstants.SCEHDULES_HEADER);
-//        command.add(CommandConstants.ADD_CANCEL_DUMMY);
-//        command.add((byte) 0x18);
+//        command.add(CommandConstants.ADD_SUB_DUMMY);
+//        command.add((byte) 24);
 //        command.addAll(Arrays.asList(ArrayUtils.toObject("05".getBytes())));
-//        command.addAll(Arrays.asList(ArrayUtils.toObject("20.10.2015".getBytes())));
+//        command.addAll(Arrays.asList(ArrayUtils.toObject("20.03.2016".getBytes())));
 //        command.addAll(Arrays.asList(ArrayUtils.toObject("משמש גדול".getBytes())));
 //        System.out.println("Size is " + command.size());
 //        byte[] commandArr = new byte[command.size()];
 //        for (int i = 0; i < commandArr.length; ++i)
 //            commandArr[i] = command.get(i);
 //        CommandProcessor.executeCommand(commandArr);
-//        /* Dummy Test End - TESTED, IT WORKS*/
-//        
-//        /* Dummy removal */
+        /* Dummy Test End - TESTED, IT WORKS*/
+        
+        /* Dummy removal */
 //        byte[] remvCommand = new byte[3];
 //        remvCommand[0] = CommandConstants.SCEHDULES_HEADER;
 //        remvCommand[1] = CommandConstants.REMOVE_ALL_DUMMIES_FROM_ID;
